@@ -1,0 +1,51 @@
+package portfolio.ecommerce.Login;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import portfolio.ecommerce.common.Status;
+import portfolio.ecommerce.db.LoginDb;
+
+@Path("/Login")
+public class Login {
+
+	@Context
+	HttpServletResponse httpResponse;
+
+	Status status = new Status();
+
+	@GET
+	@Path("/getLogin")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<?> getLogin() {
+		LoginDb login=new LoginDb();
+		try {
+			return login.getLoginDetails();
+			
+		}catch(Exception e) {
+			return null;
+		}
+		
+	}
+
+	@POST
+	@Path("/validate")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response validateLogin(LoginObj login) {
+			if(login.getUsername().equals("") || login.getPassword().equals("")) {
+				status.setError(HttpServletResponse.SC_FORBIDDEN);
+				return Response.status(200).entity(status).build();
+			}
+		return Response.status(200).entity(status).build();
+	}
+}

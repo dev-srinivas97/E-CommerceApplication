@@ -1,0 +1,38 @@
+<!-- ecommerce.component.html -->
+<div>
+  <app-header-menu></app-header-menu>
+  <div [formGroup]="ecommerceGroup">
+    <div class="filter-container">
+      <label for="category">Category:</label>
+      <select id="category" formControlName="category">
+        <option value="">All</option>
+        <option value="Electronics">Electronics</option>
+        <option value="Clothing">Clothing</option>
+        <option value="Books">Books</option>
+      </select>
+
+      <label for="price" >Max Price:</label>
+      <input type="number" id="price" formControlName="price"/>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody formArrayName="items">
+        <tr *ngFor="let item of getItemData().controls; let i = index" [formGroupName]="i">
+          <td><input formControlName="name" /></td>
+          <td><input formControlName="category" /></td>
+          <td><input formControlName="price" /></td>
+
+        </tr>
+      </tbody>
+    </table>
+
+    <button (click)="getLogin()">Submit</button>
+  </div>
+</div>

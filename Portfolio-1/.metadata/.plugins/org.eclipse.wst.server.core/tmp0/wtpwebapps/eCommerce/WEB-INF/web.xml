@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app>
+
+
+	<filter>
+		<filter-name>CorsFilter</filter-name>
+		<display-name>CorsFilter</display-name>
+		<description></description>
+		<filter-class>portfolio.ecommerce.common.CorsFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>CorsFilter</filter-name>
+		<url-pattern>/eComm/*</url-pattern>
+	</filter-mapping>
+	<display-name>Archetype Created Web Application</display-name>
+</web-app>

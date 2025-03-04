@@ -1,0 +1,11 @@
+package portfolio.ecommerce.intf;
+
+import java.util.List;
+
+
+import portfolio.ecommerce.Login.LoginObj;
+import portfolio.ecommerce.Login.ValidateLoginObj;
+
+public interface LoginValidation {
+	public List<ValidateLoginObj> validateLogin(LoginObj loginObj) throws Throwable;
+}

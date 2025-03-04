@@ -1,0 +1,5 @@
+package portfolio.ecommerce.jwt;
+
+public class JwtValidator {
+
+}

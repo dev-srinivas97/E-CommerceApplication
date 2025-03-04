@@ -1,0 +1,44 @@
+package portfolio.ecommerce.intf;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+import portfolio.ecommerce.Login.LoginObj;
+import portfolio.ecommerce.Login.ValidateLoginObj;
+import portfolio.ecommerce.db.LoginDb;
+import portfolio.ecommerce.jwt.JwtTokenUtil;
+
+public class LoginValidate implements LoginValidation {
+
+	LoginDb loginDb = new LoginDb();
+
+//	Validate the username and password and generate the JWT Token
+	@Override
+	public List<ValidateLoginObj> validateLogin(LoginObj loginObj) throws Exception {
+		try {
+			JwtTokenUtil jwtTokenUtil = new JwtTokenUtil();
+			ValidateLoginObj validateLogin = new ValidateLoginObj();
+			List<ValidateLoginObj> loginList = new ArrayList();
+			for (LoginObj loginDet : loginDb.getLoginDetails()) {
+				if (loginDet.getUsername().equals(loginObj.getUsername())
+						&& loginDet.getPassword().equals(loginObj.getPassword())) {
+
+					// Generate JWT after successful login
+					String token = jwtTokenUtil.generateToken(loginObj.getUsername());
+					validateLogin.setJwtToken(token);
+					validateLogin.setValidate(true);
+					loginList.add(validateLogin);
+					return loginList;
+
+				}
+			}
+			validateLogin.setValidate(false);
+			loginList.add(validateLogin);
+			return loginList;
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
+}

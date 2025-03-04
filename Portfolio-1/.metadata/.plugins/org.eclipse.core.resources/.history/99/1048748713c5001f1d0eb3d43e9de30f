@@ -1,0 +1,37 @@
+package portfolio.ecommerce.jwt;
+
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
+
+import java.security.Key;
+import java.util.Date;
+
+public class JwtTokenUtil {
+    
+    // Generate a JWT Token
+    public static String generateToken(String username) {
+        // Secret key for signing (use a secure key in production)
+        Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+
+        // Set expiration time (e.g., 30 minutes)
+        long expirationTimeMillis = 30 * 60 * 1000; // 30 minutes
+        Date now = new Date();
+        Date expiryDate = new Date(now.getTime() + expirationTimeMillis);
+
+        // Generate the JWT
+        return Jwts.builder()
+                .setSubject(username) // User identifier
+                .setIssuedAt(now)     // Issue time
+                .setExpiration(expiryDate) // Expiration time
+                .signWith(key)        // Sign with the secret key
+                .compact();           // Build the JWT
+    }
+
+    // Example usage
+    public static void main(String[] args) {
+        String token = generateToken("user123");
+        System.out.println("Generated JWT: " + token);
+    }
+}
+
