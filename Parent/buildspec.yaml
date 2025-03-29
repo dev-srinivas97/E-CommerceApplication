@@ -1,0 +1,40 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+      java: corretto17
+    commands:
+      - echo "Installing Angular CLI"
+      - npm install -g @angular/cli
+      - echo "Checking Docker version"
+      - docker --version
+  pre_build:
+    commands:
+      - echo "Building the Angular application"
+      - cd Parent/ECommerceGUIApp
+      - npm install
+      - ng build --configuration production
+      - cd ../..
+      - echo "Copying Angular build files to Java project"
+      - cp -R Parent/ECommerceGUIApp/dist/ecommerce-guiapp/browser/* Parent/eCommerce/src/main/webapp/
+      - echo "Running Maven clean package to create WAR file"
+      - cd Parent/eCommerce
+      - mvn clean package
+      - cd ../..
+      - echo "Logging in to Docker Hub"
+      - docker login -u "srinivas496" -p "Srinivas@97$"
+  build:
+    commands:
+      - echo "Building Docker image"
+      - cd Parent
+      - docker build -t "srinivas496/ECommerceGUIApp:latest" .
+  post_build:
+    commands:
+      - echo "Pushing Docker image to Docker Hub"
+      - docker push "srinivas496/ECommerceGUIApp:latest"
+artifacts:
+  files:
+    - Parent/eCommerce/target/*.war
+  discard-paths: yes
