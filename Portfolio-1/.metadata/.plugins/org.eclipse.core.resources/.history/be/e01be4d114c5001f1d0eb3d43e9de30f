@@ -1,9 +1,0 @@
-package portfolio.ecommerce.intf;
-
-import javax.ws.rs.core.Response;
-
-import portfolio.ecommerce.Login.LoginObj;
-
-public interface LoginValidation {
-	public Response validateLogin(LoginObj loginObj) throws Throwable;
-}

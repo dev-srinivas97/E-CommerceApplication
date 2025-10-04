@@ -1,7 +1,0 @@
-INDEX VERSION 1.4+C:\Courses & POC\Portfolios\Portfolio-1\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
-1188156960.index
-499465696.index
-1912048285.index
-1392821036.index
-4060778323.index
-2360562182.index
